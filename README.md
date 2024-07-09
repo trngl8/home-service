@@ -6,7 +6,6 @@ This is a simple Flask app for home-service company
 
 - Python 3.x
 - Flask
-- python-dotenv
 
 ## Installation
 
@@ -33,13 +32,13 @@ After that create the virtual environment:
 Then install the reuqired packages: 
 
 ```bash
-    pip install requirements.txt
+    pip install -r requirements.txt
 ```
 
 In order to run the app you need to do the following in the command line: 
 
 ```bash
-    flask run 
+    flask --app index run
 ```
 
 The application will be available at  local host http://127.0.0.1:5000.
