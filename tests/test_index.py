@@ -12,7 +12,11 @@ class AppTestCase(unittest.TestCase):
         response = self.app.get('/')
         self.assertEqual(200, response.status_code)
 
-    def test_order(self):
+    def test_order_fail(self):
+        response = self.app.post('/', data={}, follow_redirects=True)
+        self.assertEqual(200, response.status_code)
+
+    def test_order_success(self):
         response = self.app.post('/', data={
             "name": "Address",
             "type": "1",
