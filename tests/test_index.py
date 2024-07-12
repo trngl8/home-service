@@ -29,8 +29,8 @@ class AppTestCase(unittest.TestCase):
             "electricity": "Yes",
             "straits": "No",
             "kitchen_squares": "10"
-        }, follow_redirects=True)
-        self.assertEqual(200, response.status_code)
+        }, follow_redirects=False)
+        self.assertEqual(301, response.status_code)
 
 
 if __name__ == '__main__':
