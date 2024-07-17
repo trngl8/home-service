@@ -27,7 +27,7 @@ def home():
         return redirect(url_for('home'))
     elif request.method == "POST" and not form.validate():
         return redirect(url_for('home'))
-    return redirect(url_for('home'))
+    return render_template("home.html")
 
 
 if __name__ == "__main__":
