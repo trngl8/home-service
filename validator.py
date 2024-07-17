@@ -10,7 +10,7 @@ class Validator:
             self.errors.append(f"The field {field} can not be empty")
             return False
         return True
-    
+
 
     def is_integer(self, field):
         value = self.data.get(field)
@@ -24,6 +24,11 @@ class Validator:
         value = self.data.get(field)
         if value is not None and value.isdigit():
             if not (min_possible <= int(value) <= max_possible):
-                self.errors.append(f"The filed {field} mus be beteween {min_possible} and {max_possible}")
+                self.errors.append(f"The filed {field} muts be between {min_possible} and {max_possible}")
                 return False
         return True
+    
+    def validate(self):
+        if len(self.errors) == 0:
+            return True
+        return False
