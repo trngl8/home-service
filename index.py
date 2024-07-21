@@ -31,5 +31,35 @@ def home():
     return render_template("home.html")
 
 
+@app.route('/about', methods=["GET"])
+def about():
+    return render_template("blank.html")
+
+
+@app.route('/products', methods=["GET"])
+def products():
+    return render_template("products.html")
+
+
+@app.route('/contacts', methods=["GET", "POST"])
+def contacts():
+    return render_template("contacts.html")
+
+
+@app.route('/services', methods=["GET"])
+def services():
+    return render_template("services.html")
+
+
+@app.route('/articles', methods=["GET"])
+def articles():
+    return render_template("articles.html")
+
+
+@app.route('/order', methods=["GET", "POST"])
+def order():
+    return render_template("order.html")
+
+
 if __name__ == "__main__":
     app.run(debug=os.getenv("DEVELOPMENT"))
