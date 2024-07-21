@@ -42,7 +42,7 @@ class AppTestCase(unittest.TestCase):
         self.assertIn(b'This field is required', response.data)
 
     def test_order_success(self):
-        response = self.app.post('/order', data={
+        response = self.app.post('/', data={
             "name": "Address",
             "type": "1",
             "property_type": "House",
