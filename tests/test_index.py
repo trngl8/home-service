@@ -37,7 +37,7 @@ class AppTestCase(unittest.TestCase):
         self.assertEqual(200, response.status_code)
 
     def test_order_fail(self):
-        response = self.app.post('/order', data={}, follow_redirects=True)
+        response = self.app.post('/', data={}, follow_redirects=True)
         self.assertEqual(200, response.status_code)
         self.assertIn(b'This field is required', response.data)
 
