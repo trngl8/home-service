@@ -30,7 +30,7 @@ class AppTestCase(unittest.TestCase):
             "straits": "No",
             "kitchen_squares": "10"
         }, follow_redirects=False)
-        self.assertEqual(301, response.status_code)
+        self.assertEqual(302, response.status_code)
 
 
 if __name__ == '__main__':

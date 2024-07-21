@@ -5,6 +5,7 @@ from catalog import create_app
 from forms import RealtyForm
 
 app = create_app()
+app.secret_key = b'_ReB-9qVr-ghJ+n7+I.xu='
 
 db_path = os.path.join(app.instance_path, 'catalog.db')
 if not os.path.exists(db_path):
