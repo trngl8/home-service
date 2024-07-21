@@ -1,7 +1,8 @@
-from flask import request, render_template
+from flask import request, render_template, redirect, flash, url_for
 import os
 from catalog import db
 from catalog import create_app
+from forms import RealtyForm
 
 app = create_app()
 
@@ -13,25 +14,21 @@ if not os.path.exists(db_path):
 
 @app.route('/', methods=["GET", "POST"])
 def home():
-    if request.method == "POST":
-        user_name = request.form.get("name")
-        user_property_type = request.form.get("type")
-        user_square = request.form.get("square")
-        user_bathrooms = request.form.get("bathrooms")
-        user_bedrooms = request.form.get("bedrooms")
-        user_water_supply = request.form.get("water")
-        user_electricity = request.form.get("electricity")
-        user_straits = request.form.get("straits")
-        user_kitchen_squares = request.form.get("kitchen")
-
-
+    form = RealtyForm(request.form)
+    if request.method == "POST" and form.validate():
         database = db.get_db()
         database.execute(
             "INSERT INTO realty (name, type, square, bathrooms, bedrooms, water_supply, electricity, straits, kitchen) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
-            (user_name, user_property_type, user_square, user_bathrooms, user_bedrooms, user_water_supply, user_electricity, user_straits, user_kitchen_squares)
+            (form.name.data, form.property_type.data, form.square.data, form.bathrooms.data, form.bedrooms.data, \
+            form.water_supply.data, form.electricity.data, form.straits.data, form.kitchen_squares.data)
         )
         database.commit()
+        flash("Form submitted successfully!", "success")
+        return redirect(url_for('home'))
+    elif request.method == "POST" and not form.validate():
+        return redirect(url_for('home'))
     return render_template("home.html")
+
 
 if __name__ == "__main__":
     app.run(debug=os.getenv("DEVELOPMENT"))
