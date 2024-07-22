@@ -6,7 +6,7 @@ from flask.cli import with_appcontext
 
 
 
-@click.command("show-environment-configuration")
+@click.command("env-config")
 @with_appcontext
 def show_environment_configuration():
     """
@@ -16,7 +16,7 @@ def show_environment_configuration():
         click.echo(f"{key}: {value}")
 
 
-@click.command("show-order-requests")
+@click.command("order-reqs")
 @with_appcontext
 def show_order_requests():
     """
