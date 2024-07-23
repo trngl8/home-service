@@ -1,10 +1,14 @@
 from flask import request, render_template, redirect, flash, url_for
 import os
+import zmq
+import json
 from catalog import db
 from catalog import create_app
 from forms import RealtyForm
 from commands import show_environment_configuration, show_order_requests
+from dotenv import load_dotenv
 
+load_dotenv()
 app = create_app()
 app.secret_key = b'_ReB-9qVr-ghJ+n7+I.xu='
 app.cli.add_command(show_environment_configuration)
@@ -15,12 +19,28 @@ if not os.path.exists(db_path):
     with app.app_context():
         db.init_db()
 
+context = zmq.Context()
+zmq_socket = context.socket(zmq.PUB)
+zmq_socket.bind("tcp://127.0.0.1:5555")
 
 @app.route('/', methods=["GET", "POST"])
 def home():
     form = RealtyForm(request.form)
     if request.method == "POST" and form.validate():
         database = db.get_db()
+        data = {
+            "name": form.name.data,
+            "property_type": form.property_type.data,
+            "square": form.square.data,
+            "bathrooms": form.bathrooms.data,
+            "bedrooms": form.bedrooms.data,
+            "water_supply": form.water_supply.data,
+            "electricity": form.electricity.data,
+            "straits": form.straits.data,
+            "kitchen_squares": form.kitchen_squares.data
+        }
+        json_data = json.dumps(data)
+        zmq_socket.send_string(json_data)
         database.execute(
             "INSERT INTO realty (name, type, square, bathrooms, bedrooms, water_supply, electricity, straits, kitchen) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
             (form.name.data, form.property_type.data, form.square.data, form.bathrooms.data, form.bedrooms.data, \
