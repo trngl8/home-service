@@ -3,9 +3,12 @@ import os
 from catalog import db
 from catalog import create_app
 from forms import RealtyForm
+from commands import show_environment_configuration, show_order_requests
 
 app = create_app()
 app.secret_key = b'_ReB-9qVr-ghJ+n7+I.xu='
+app.cli.add_command(show_environment_configuration)
+app.cli.add_command(show_order_requests)
 
 db_path = os.path.join(app.instance_path, 'catalog.db')
 if not os.path.exists(db_path):
